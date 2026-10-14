@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>College Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sign up / log in (first page) -->
+<div id="authScreen" class="auth">
+  <header class="auth-welcome">
+    <h2>Welcome to College Flow</h2>
+    <p>"Small steps every day lead to big achievements. Stay focused, keep learning, and believe in yourself!"</p>
+  </header>
+
+  <div class="auth-card">
+    <h1>College Flow</h1>
+    <p class="tag">Plan Smart. Study Better. Perform Better.</p>
+    <h2 id="auTitle">Create your account</h2>
+    <form id="authForm">
+      <label id="auNameRow">Name
+        <input type="text" id="auName" autocomplete="name" maxlength="40">
+      </label>
+      <label>Email
+        <input type="email" id="auEmail" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input type="password" id="auPass" autocomplete="current-password" minlength="6" required>
+      </label>
+      <div class="err" id="auErr" role="alert"></div>
+      <button class="btn" type="submit" id="auSubmit">Sign up</button>
+    </form>
+    <p class="switch"><span id="auSwitchText">Already have an account?</span>
+      <button class="link" id="auSwitch" type="button">Log in</button></p>
+    <small>Your data is saved in this browser on this device.</small>
+  </div>
+</div>
+
+<!-- Dashboard (shown after login) -->
+<div class="app" id="appShell" hidden>
+  <aside>
+    <h1>College Flow</h1>
+    <p>Plan Smart. Study Better. Perform Better.</p>
+    <nav aria-label="Main">
+      <a href="#overview">Dashboard</a>
+      <a href="#exams">Exams</a>
+      <a href="#tasks">Study tasks</a>
+      <a href="#prep">Preparation</a>
+      <a href="#attendance">Attendance</a>
+      <a href="#syllabus">My subjects</a>
+      <a href="#feedback">Feedback</a>
+      <a href="#timer">Focus timer</a>
+      <a href="#contact">Contact me</a>
+    </nav>
+
+    <!-- AI assistants: open in a small window so College Flow stays open -->
+    <div class="ai-links">
+      <h4>AI assistants</h4>
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" data-ai="ChatGPT">ChatGPT</a>
+      <a href="https://claude.ai/new" target="_blank" rel="noopener noreferrer" data-ai="Claude">Claude</a>
+    </div>
+
+    <div class="user">
+      <span id="userName"></span>
+      <button class="btn ghost sm" id="logoutBtn">Log out</button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="live-clock">
+      <span id="current-date"></span>
+      <span id="current-time"></span>
+    </div>
+
+    <div class="welcome-section">
+      <h2 id="welcome-message">Welcome!</h2>
+      <p class="motivation">
+        "Small steps every day lead to big achievements.
+        Stay focused, keep learning, and believe in yourself!"
+      </p>
+    </div>
+
+    <div class="top" id="overview">
+      <h2>Your exam dashboard</h2>
+      <div class="top-right">
+        <span id="today"></span>
+        <button class="btn" id="suggestBtn">What to study next</button>
+      </div>
+    </div>
+
+    <div class="focus" id="focus"></div>
+    <div class="stats" id="stats"></div>
+
+    <div class="grid">
+      <section class="card" id="exams">
+        <h3>Upcoming exams</h3>
+        <div id="examList"></div>
+      </section>
+
+      <section class="card" id="tasks">
+        <h3>Study tasks</h3>
+        <form class="add" id="taskForm">
+          <input type="text" id="taskText" placeholder="e.g. Revise K-map simplification" aria-label="Task" maxlength="120" required>
+          <select id="taskSub" aria-label="Subject"></select>
+          <button class="btn" type="submit">Add task</button>
+        </form>
+        <div id="taskList"></div>
+      </section>
+
+      <section class="card" id="prep">
+        <h3>Subject preparation</h3>
+        <div id="prepList"></div>
+      </section>
+
+      <section class="card" id="attendance">
+        <h3>Attendance</h3>
+        <div id="attList"></div>
+      </section>
+
+      <section class="card wide" id="syllabus">
+        <h3>My subjects and syllabus</h3>
+        <form class="add" id="subForm">
+          <input type="text" id="subName" list="libNames" placeholder="Subject name, e.g. Digital Electronics" aria-label="Subject name" maxlength="80" required>
+          <input type="date" id="subDate" aria-label="Exam date">
+          <button class="btn" type="submit">Add subject</button>
+        </form>
+        <datalist id="libNames"></datalist>
+        <div class="empty" id="subNote"></div>
+
+        <div id="sylTools">
+          <div class="sylbar">
+            <select id="synSub" aria-label="Choose subject"></select>
+            <button class="btn ghost sm" id="delSub" type="button">Delete subject</button>
+          </div>
+          <form class="add" id="unitForm">
+            <input type="text" id="unitName" placeholder="New unit or module, e.g. Module 1: Introduction" aria-label="Unit name" maxlength="100" required>
+            <button class="btn" type="submit">Add unit</button>
+            <button class="btn ghost" type="button" id="aiUnits">Suggest units</button>
+          </form>
+        </div>
+        <div id="synList"></div>
+      </section>
+
+      <section class="card wide" id="feedback">
+        <h3>Feedback and suggestions</h3>
+        <form id="fbForm" class="fb-form">
+          <select id="fbType" aria-label="Type">
+            <option>Feedback</option>
+            <option>Suggestion</option>
+            <option>Bug report</option>
+          </select>
+          <textarea id="fbText" rows="3" maxlength="800" placeholder="Tell me what to improve or add" required></textarea>
+          <button class="btn" type="submit">Send</button>
+        </form>
+        <div class="empty" id="fbNote"></div>
+        <div id="fbList"></div>
+      </section>
+
+      <section class="card wide timer" id="timer">
+        <h3>Focus timer</h3>
+        <div class="clock" id="clock">25:00</div>
+        <div class="btns">
+          <button class="btn" id="tStart">Start</button>
+          <button class="btn ghost" id="tReset">Reset</button>
+          <button class="btn ghost" data-min="25">25 min</button>
+          <button class="btn ghost" data-min="50">50 min</button>
+          <button class="btn ghost" data-min="10">10 min</button>
+        </div>
+        <div class="empty" id="sessions"></div>
+      </section>
+    </div>
+
+    <footer class="contact" id="contact">
+      <h3>Contact me</h3>
+      <div class="links">
+        <a href="mailto:mdhussainkhan341@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span>mdhussainkhan341@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/mdhussain0" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3" fill="currentColor"/><g style="fill:var(--panel)"><rect x="5.5" y="9.5" width="2.5" height="8.5"/><circle cx="6.75" cy="6.5" r="1.5"/><path d="M10.5 9.5h2.4v1.2c.5-.9 1.5-1.4 2.7-1.4 2.2 0 3 1.4 3 3.6V18h-2.5v-4.6c0-1.1-.4-1.8-1.4-1.8s-1.7.7-1.7 1.9V18h-2.5z"/></g></svg>
+          <span>mdhussain0</span>
+        </a>
+        <a href="https://www.instagram.com/hussain.khan1_" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          <span>hussain.khan1_</span>
+        </a>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- What to study next (popup) -->
+<dialog id="sugDlg" aria-labelledby="sugTitle">
+  <div class="dlg-head">
+    <h3 id="sugTitle">What to study next</h3>
+    <button class="x" id="sugClose" aria-label="Close">&times;</button>
+  </div>
+  <div id="sugBody"></div>
+</dialog>
+
+<script src="library.js"></script>
+<script src="script.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
