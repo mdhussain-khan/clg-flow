@@ -8,9 +8,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <link rel="stylesheet" href="cord.css">
 
+</head>
+<body class="locked">
+<div id="intro">
+  <div class="scene">
+    <svg viewBox="0 0 320 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#FFE9A8" stop-opacity=".75"/>
+          <stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polygon class="glow" points="105,132 195,132 40,332 260,332" fill="url(#beam)"/>
+      <rect x="60" y="300" width="70" height="30" rx="3" fill="#2457D6"/>
+      <rect x="66" y="282" width="58" height="18" rx="3" fill="#C0392B"/>
+      <rect x="20" y="330" width="280" height="14" rx="4" fill="#7A4B2A"/>
+      <rect x="40" y="344" width="12" height="70" fill="#5E3A20"/>
+      <rect x="268" y="344" width="12" height="70" fill="#5E3A20"/>
+      <ellipse cx="230" cy="328" rx="34" ry="6" fill="#2A3350"/>
+      <path d="M230 326 L222 230 L160 82" stroke="#2A3350" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <polygon points="125,80 175,80 205,132 95,132" fill="#F0B34A"/>
+      <ellipse class="glow" cx="150" cy="132" rx="55" ry="7" fill="#FFF3C4"/>
+    </svg>
+    <div class="cord" id="cord" role="button" aria-label="Drag the cord down">
+      <div class="cord-line"></div>
+      <div class="cord-knob"></div>
+    </div>
+    <p class="hint">Drag the cord down</p>
+  </div>
+</div>
 <!-- Sign up / log in (first page) -->
 <div id="authScreen" class="auth">
   <header class="auth-welcome">
@@ -208,5 +236,6 @@
 <script src="library.js"></script>
 <script src="script.js"></script>
 <script src="auth.js"></script>
+  <script src="cord.js"></script>
 </body>
 </html>
